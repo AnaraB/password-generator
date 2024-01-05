@@ -1,2 +1,2 @@
 # password-generator
-Application that generates random password
+## Application that generates random password
