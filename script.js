@@ -89,7 +89,6 @@ var upperCasedCharacters = [
 ];
 
 
-//ask user about password length and password option 
 // Function to prompt user for password options
 
 //global variables 
@@ -102,33 +101,33 @@ let symbol = " ";
 
 
 function getPasswordOptions() {
+
+//ask user about password length and password options 
   passwordLength = prompt("How many characters would you like your password to contain?");
  
-  //password length is not valid (less than 8 or more than 128)
+  //password length is not valid (less than 8 or more than 128) otherwise choose password char options
   if (passwordLength < 8 || passwordLength > 128) {
     passwordLength = prompt("Please choose a number between 8 and 128");
-  } 
-  // passwordLength;
-  //console.log(passwordLength);
-
-  lowerCase = confirm("If you wish your password contain Lowercase Letters press OK");
-  upperCase = confirm("If you wish your password contain Uppercase Letters press OK");
-  numNumber = confirm("If you wish your password contain Numeric Characters press OK");
-  symbol = confirm("If you wish your password contain Special Characters press OK"); 
-
-
-  //all password options pressed CANCEL == false  
-  if ( lowerCase && upperCase && numNumber && symbol == false) {
-    console.log("Sorry, password cannot be gererated. You must select password options. ")
-  } 
-
+  } else {
+    lowerCase = confirm("If you wish your password contain Lowercase Letters press OK");
+    upperCase = confirm("If you wish your password contain Uppercase Letters press OK");
+    numNumber = confirm("If you wish your password contain Numeric Characters press OK");
+    symbol = confirm("If you wish your password contain Special Characters press OK"); 
+  
+  
+    //what if all password character options pressed CANCEL by the user
+    if ( !lowerCase && !upperCase && !numNumber && !symbol ) {
+      alert("Sorry, password cannot be gererated. You must select password options. ")
+      return 
+      //getPasswordOptions()  ///recursive call
+    } 
+  }
 }
 
-console.log(passwordLength);
+//console.log(passwordLength);
 
 
 // Function for getting a random element from an array
-// use random index and based on that choose one element and return it 
 function getRandom(arr) {
   // Get the length of the array
   const length = arr.length;
@@ -144,42 +143,47 @@ function getRandom(arr) {
 
 }
 
- //generate random password based on what character types user chose and the number of characters
- 
- if (lowerCase) {
-    lowerCase = getRandom(lowerCasedCharacters);
-  } 
- if (upperCase) {
-    upperCase =  getRandom(upperCasedCharacters);
-  } 
- if (numericCharacters) {
-    numericCharacters = getRandom(numericCharacters);
-  } 
- if (symbol) {
-    symbol = getRandom(specialCharacters);
-  } 
-
- 
-  const passwordGetRandom = symbol + upperCase + lowerCase + numericCharacters 
-
-  //console.log(passwordGetRandom);
-
 //-----------------------------Function to generate password with user input---------------------------------//
-let password = " ";
+let passwordNew = " ";
 
 function generatePassword() {
+//create set of possible characters for each option by using getRandom func
+var setOfChars = [];
 
-console.log(passwordGetRandom.length);
-// generate password length to match the length required by the user's input
- while (passwordLength > passwordGetRandom.length){
-    password += passwordGetRandom[Math.floor(Math.random() * passwordGetRandom.length)];
- }
- console.log(password);
+if (lowerCase) {
+  lowerCase = getRandom(lowerCasedCharacters);
+  setOfChars = setOfChars.concat(lowerCasedCharacters); 
+  
+} 
+if (upperCase) {
+  upperCase =  getRandom(upperCasedCharacters);
+  setOfChars = setOfChars.concat(upperCasedCharacters);
+} 
+if (numericCharacters) {
+  numericCharacters = getRandom(numericCharacters);
+  setOfChars = setOfChars.concat(numericCharacters);
+} 
+if (symbol) {
+  symbol = getRandom(specialCharacters);
+  setOfChars = setOfChars.concat(specialCharacters);
+} 
+
+console.log(setOfChars);
+console.log(passwordLength);
+
+
+
+// generate password based on the password length required by the user's input
+
+while(passwordLength < setOfChars.length || passwordLength > setOfChars.length ){
+  passwordNew += setOfChars[Math.floor(Math.random() * setOfChars.length)];
+}
+console.log(passwordNew);
 }
 
 //call functions
 getPasswordOptions();
-//generatePassword();
+generatePassword();
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
