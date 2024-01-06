@@ -117,14 +117,13 @@ function getPasswordOptions() {
   
     //what if all password character options pressed CANCEL by the user
     if ( !lowerCase && !upperCase && !numNumber && !symbol ) {
-      alert("Sorry, password cannot be gererated. You must select password options. ")
-      return 
-      //getPasswordOptions()  ///recursive call
+      alert("Sorry, password cannot be gererated. Choose at least one password option. ")
+      
+      // getPasswordOptions()  ///recursive call
     } 
   }
 }
 
-//console.log(passwordLength);
 
 
 // Function for getting a random element from an array
@@ -147,43 +146,36 @@ function getRandom(arr) {
 let passwordNew = " ";
 
 function generatePassword() {
-//create set of possible characters for each option by using getRandom func
+  getPasswordOptions();
+
+//create set of all possible characters by joining required character options together
 var setOfChars = [];
 
 if (lowerCase) {
-  lowerCase = getRandom(lowerCasedCharacters);
+  //lowerCase = getRandom(lowerCasedCharacters);
   setOfChars = setOfChars.concat(lowerCasedCharacters); 
-  
 } 
 if (upperCase) {
-  upperCase =  getRandom(upperCasedCharacters);
+  //upperCase =  getRandom(upperCasedCharacters);
   setOfChars = setOfChars.concat(upperCasedCharacters);
 } 
-if (numericCharacters) {
-  numericCharacters = getRandom(numericCharacters);
+if (numNumber) {
+  //numNumber = getRandom(numericCharacters);
   setOfChars = setOfChars.concat(numericCharacters);
 } 
 if (symbol) {
-  symbol = getRandom(specialCharacters);
+  //symbol = getRandom(specialCharacters);
   setOfChars = setOfChars.concat(specialCharacters);
 } 
 
-console.log(setOfChars);
-console.log(passwordLength);
-
-
 
 // generate password based on the password length required by the user's input
-
-while(passwordLength < setOfChars.length || passwordLength > setOfChars.length ){
+while(passwordNew.length < passwordLength ){
   passwordNew += setOfChars[Math.floor(Math.random() * setOfChars.length)];
-}
-console.log(passwordNew);
+  }
+  return passwordNew;
 }
 
-//call functions
-getPasswordOptions();
-generatePassword();
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
