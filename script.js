@@ -186,6 +186,10 @@ function writePassword() {
   var passwordText = document.querySelector('#password');
 
   passwordText.value = password;
+
+  setTimeout(function() {
+    passwordText.value = '';
+  }, 5000); // Clear the password after 5 seconds
 }
 
 // Add event listener to generate button
