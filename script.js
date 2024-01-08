@@ -88,9 +88,6 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-
-// Function to prompt user for password options
-
 //global variables 
 let passwordLength = 0;
 
@@ -99,48 +96,32 @@ let upperCase = " ";
 let numNumber = " ";
 let symbol = " ";
 
-
+// Function to prompt user for password options
 function getPasswordOptions() {
 
-//ask user about password length and password options 
-  passwordLength = prompt("How many characters would you like your password to contain?");
- 
-  //password length is not valid (less than 8 or more than 128) otherwise choose password char options
-  if (passwordLength < 8 || passwordLength > 128) {
-    passwordLength = prompt("Please choose a number between 8 and 128");
-  } else {
-    lowerCase = confirm("If you wish your password contain Lowercase Letters press OK");
-    upperCase = confirm("If you wish your password contain Uppercase Letters press OK");
-    numNumber = confirm("If you wish your password contain Numeric Characters press OK");
-    symbol = confirm("If you wish your password contain Special Characters press OK"); 
-  
-  
-    //what if all password character options pressed CANCEL by the user
-    if ( !lowerCase && !upperCase && !numNumber && !symbol ) {
-      alert("Sorry, password cannot be gererated. Choose at least one password option. ")
-      
-      // getPasswordOptions()  ///recursive call
-    } 
+  //ask user about password length
+    passwordLength = prompt("How many characters would you like your password to contain?");
+   
+    //password length is not valid (less than 8 or more than 128) otherwise choose password char options
+    if (passwordLength < 8 || passwordLength > 128) {
+      passwordLength = prompt("Please choose a number between 8 and 128");
+    } else {
+      lowerCase = confirm("If you wish your password contain Lowercase Letters press OK");
+      upperCase = confirm("If you wish your password contain Uppercase Letters press OK");
+      numNumber = confirm("If you wish your password contain Numeric Characters press OK");
+      symbol = confirm("If you wish your password contain Special Characters press OK"); 
+    
+    
+      //what if all password character options are pressed CANCEL 
+      if ( !lowerCase && !upperCase && !numNumber && !symbol ) {
+        alert("Sorry, password cannot be gererated. Choose at least one password option. ")
+        
+        // getPasswordOptions()  ///recursive call
+      } 
+    }
   }
-}
 
 
-
-// Function for getting a random element from an array
-function getRandom(arr) {
-  // Get the length of the array
-  const length = arr.length;
-
-  // Generate a random index
-  const randomIndex = Math.floor(Math.random() * length);
-
-  // Access the element at the random index
-  const randomElement = arr[randomIndex];
-
-  // Return the random element
-  return randomElement;
-
-}
 
 //-----------------------------Function to generate password with user input---------------------------------//
 let passwordNew = " ";
@@ -148,32 +129,28 @@ let passwordNew = " ";
 function generatePassword() {
   getPasswordOptions();
 
-//create set of all possible characters by joining required character options together
-var setOfChars = [];
+  //create set of all possible characters by joining required character options together
+  var setOfChars = [];
 
-if (lowerCase) {
-  //lowerCase = getRandom(lowerCasedCharacters);
-  setOfChars = setOfChars.concat(lowerCasedCharacters); 
-} 
-if (upperCase) {
-  //upperCase =  getRandom(upperCasedCharacters);
-  setOfChars = setOfChars.concat(upperCasedCharacters);
-} 
-if (numNumber) {
-  //numNumber = getRandom(numericCharacters);
-  setOfChars = setOfChars.concat(numericCharacters);
-} 
-if (symbol) {
-  //symbol = getRandom(specialCharacters);
-  setOfChars = setOfChars.concat(specialCharacters);
-} 
+  if (lowerCase) {
+    setOfChars = setOfChars.concat(lowerCasedCharacters); 
+  } 
+  if (upperCase) {
+    setOfChars = setOfChars.concat(upperCasedCharacters);
+  } 
+  if (numNumber) {
+    setOfChars = setOfChars.concat(numericCharacters);
+  } 
+  if (symbol) {
+    setOfChars = setOfChars.concat(specialCharacters);
+  } 
 
 
-// generate password based on the password length required by the user's input
-while(passwordNew.length < passwordLength ){
-  passwordNew += setOfChars[Math.floor(Math.random() * setOfChars.length)];
-  }
-  return passwordNew;
+  // generate password based on the password length required by the user's input
+  while(passwordNew.length < passwordLength ){
+    passwordNew += setOfChars[Math.floor(Math.random() * setOfChars.length)];
+    }
+    return passwordNew;
 }
 
 
