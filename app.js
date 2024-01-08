@@ -64,9 +64,10 @@ function selectPasswordOptions() {
 // Function to prompt user for password options
 function getPasswordOptions() {
 
-  //ask user about password length
+  //ask user about password length and convert the repsopnse into int with parseInt
   passwordLength = parseInt(prompt("How many characters would you like your password to contain?"));
-
+  
+  //check whether is the number and is valid to be in the range between 8 and 128
   if (isNaN(passwordLength) || !(passwordLength >= 8 && passwordLength <= 128)) {
     alert("Please enter a valid number between 8 and 128");
     getPasswordOptions(); // Use recursion to prompt again
